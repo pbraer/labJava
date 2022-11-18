@@ -2,6 +2,7 @@
  @author p.braer
  */
 
+
 public class Account {
 
     /**
@@ -42,7 +43,7 @@ public class Account {
         this.blocked = value;
     }
 
-    Account (String username, String date_Birth, String email, String password) {
+    Account (String username, String date_Birth, String email, String password, boolean blocked) {
         this.username = username;
         this.date_Birth = date_Birth;
         this.email = email;
