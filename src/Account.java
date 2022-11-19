@@ -38,19 +38,18 @@ public class Account {
         this.count = 0;
     }
 
-    public String getLast_Name() { return last_Name; }
+    @Override
+    public String toString() {
+
+        return last_Name + "," + first_Name + "," + middle_Name + "," + date_Birth +
+                "," + email + "," + password + "," + blocked + "," + count + "\n";
+    }
 
     public void setLast_Name(String last_Name) { this.last_Name = last_Name; }
 
-    public String getFirst_Name() { return first_Name; }
-
     public void setFirst_Name(String first_Name) { this.first_Name = first_Name; }
 
-    public String getMiddle_Name() { return middle_Name; }
-
     public void setMiddle_Name(String middle_Name) { this.middle_Name = middle_Name; }
-
-    public String getDate_Birth() { return date_Birth; }
 
     public void setDate_Birth(String date_Birth) { this.date_Birth = date_Birth; }
 
@@ -72,10 +71,4 @@ public class Account {
 
     public void countPlus() { this.count++; }
 
-    @Override
-    public String toString() {
-
-        return last_Name + "," + first_Name + "," + middle_Name + "," + date_Birth +
-                "," + email + "," + password + "," + blocked + "," + count + "\n";
-    }
 }

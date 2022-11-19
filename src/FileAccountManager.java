@@ -3,7 +3,6 @@
  */
 
 import java.io.IOException;
-import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +21,7 @@ public class FileAccountManager implements AccountManager {
      */
     public void register(Account account) throws IOException, AccountAlreadyExistsException {
 
-        accounts = file.csvReader();
+        accounts = file.csv_Reader();
         int to_Change = -1;
 
         for (int i = 0; i < accounts.size(); i++) {
@@ -53,7 +52,10 @@ public class FileAccountManager implements AccountManager {
      */
     public Account login(String email, String password) throws IOException, AccountBlockedException, WrongCredentialsException {
 
-        accounts = file.csvReader();
+        System.out.println("\n" + email);
+        System.out.println(password + "\n");
+
+        accounts = file.csv_Reader();
         int step = -1;
 
         for (int i = 0; i < accounts.size(); i++) {
@@ -76,7 +78,7 @@ public class FileAccountManager implements AccountManager {
                 throw new AccountBlockedException("Ваш аккаунт заблокирован!");
 
             } else if (!Objects.equals(accounts.get(step).getPassword(), password)) { // неправильный пароль
-                counter.plus(accounts.get(step));
+                counter.wrong_login(accounts.get(step));
 
                 if (accounts.get(step).getCount() >= 5) {
                     accounts.get(step).setBlocked();
@@ -97,7 +99,11 @@ public class FileAccountManager implements AccountManager {
      * ошибку WrongCredentialsException
      */
     public void removeAccount(String email, String password) throws IOException, WrongCredentialsException {
-        accounts = file.csvReader();
+
+        System.out.println("\n" + email);
+        System.out.println(password + "\n");
+
+        accounts = file.csv_Reader();
         int step = -1;
 
         for (int i = 0; i < accounts.size(); i++) {

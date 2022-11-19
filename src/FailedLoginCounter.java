@@ -7,39 +7,33 @@
  * @author p.braer
  */
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class FailedLoginCounter {
-    private static volatile FailedLoginCounter instance;
 
-    public static FailedLoginCounter getInstance() {
-        FailedLoginCounter localInstance = instance;
-        if (localInstance == null) {
-            synchronized (FailedLoginCounter.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    instance = localInstance = new FailedLoginCounter();
-                }
-            }
-        }
-        return localInstance;
+    /** приватное стат поле с сингл-объектом:
+     */
+    private static FailedLoginCounter instance;
+
+
+    /** Сделать конструктор класса (конструктор по-умолчанию) приватным
+     */
+    private FailedLoginCounter() {
     }
 
-    /** Мапа для счета неудачных попыток по аккаунтам
+    /** стат создающий метод
+     * @return
      */
-    private static Map<Account,Integer> block_count = new HashMap<>();
-
-    /** Функция-счетчик для неудачных попыток входа
-     * По истечению 5 попыток входа аккаунт блокируется
-     */
-    public static void login_Counter(Account account) throws MyExceptions {
-
-        block_count.putIfAbsent(account, 0);
-        block_count.put(account, block_count.get(account) + 1);
-        if (block_count.get(account) >= 5) {
-            account.setBlocked(true);
-            throw new MyExceptions("AccountBlockedException: Закончились попытки ввода данных для входа в аккаунт. Ваш аккаунт заблокирован!");
+    public static FailedLoginCounter getInstance() {
+        if (instance == null) {
+            instance = new FailedLoginCounter();
         }
+        return instance;
+    }
+
+    public void registration(Account account) {}
+
+    public static void delete(Account account) {}
+
+    public void wrong_login(Account account) {
+        account.countPlus();
     }
 }
