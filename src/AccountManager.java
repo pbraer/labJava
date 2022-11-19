@@ -5,6 +5,9 @@
  * @author p.braer
  */
 
+
+import java.io.IOException;
+
 public interface AccountManager {
 
     /**
@@ -12,7 +15,7 @@ public interface AccountManager {
      * отсутствует, и создает новую запись, в противном случае
      * выбрасывает ошибку AccountAlreadyExistsException
      */
-    void register(Account account) throws MyExceptions;
+    void register(Account account) throws IOException, AccountAlreadyExistsException;
 
 
     /**
@@ -25,7 +28,7 @@ public interface AccountManager {
      * Если для конкретного пользователя больше 5 неудачных
      * попыток авторизоваться, то аккаунт блокируется.
      */
-    Account login(String email, String password) throws MyExceptions;
+    Account login(String email, String password) throws IOException, AccountBlockedException, WrongCredentialsException;
 
 
     /**
@@ -33,5 +36,5 @@ public interface AccountManager {
      * введены верно. В противном случае выбрасывает
      * ошибку WrongCredentialsException
      */
-    void removeAccount(String email, String password) throws MyExceptions;
+    void removeAccount(String email, String password) throws IOException, WrongCredentialsException;
 }
