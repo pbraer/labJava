@@ -6,49 +6,76 @@
 public class Account {
 
     /**
-     * username - имя пользователя
+     * last_name - фамилия
+     * first_Name - имя
+     * middle_Name - отчество
      * date_Birth - дата рождения
      * email - почта пользователя
      * password - пароль
      * blocked - параметр true / false, оказывающий, заблокирован ли пользователь (false по умолчанию)
+     * count - параметр для подсчета входов
      */
 
-    private String username;
+    private String last_Name;
+    private String first_Name;
+    private String middle_Name;
     private String date_Birth;
     private String email;
     private String password;
-    private boolean blocked;
+    private boolean blocked = true;
+    private int count = -1;
 
-    public String getUsername() {
-        return this.username;
-    }
+    public Account() {}
 
-    public String getDate_Birth() {
-        return this.date_Birth;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public boolean getBlocked() {
-        return this.blocked;
-    }
-
-    public void setBlocked( boolean value) {
-        this.blocked = value;
-    }
-
-    Account (String username, String date_Birth, String email, String password, boolean blocked) {
-        this.username = username;
+    public Account(String last_Name, String first_Name, String middle_Name, String date_Birth, String email, String password) {
+        this.last_Name = last_Name;
+        this.first_Name = first_Name;
+        this.middle_Name = middle_Name;
         this.date_Birth = date_Birth;
         this.email = email;
         this.password = password;
         this.blocked = false;
+        this.count = 0;
     }
 
+    public String getLast_Name() { return last_Name; }
+
+    public void setLast_Name(String last_Name) { this.last_Name = last_Name; }
+
+    public String getFirst_Name() { return first_Name; }
+
+    public void setFirst_Name(String first_Name) { this.first_Name = first_Name; }
+
+    public String getMiddle_Name() { return middle_Name; }
+
+    public void setMiddle_Name(String middle_Name) { this.middle_Name = middle_Name; }
+
+    public String getDate_Birth() { return date_Birth; }
+
+    public void setDate_Birth(String date_Birth) { this.date_Birth = date_Birth; }
+
+    public String getEmail() { return email; }
+
+    public void setEmail(String email) { this.email = email; }
+
+    public String getPassword() { return password; }
+
+    public void setPassword(String password) { this.password = password; }
+
+    public Boolean getBlocked() { return blocked; }
+
+    public void setBlocked() { this.blocked = !this.blocked; }
+
+    public int getCount() { return count; }
+
+    public void setCount(Integer count) { this.count = count; }
+
+    public void countPlus() { this.count++; }
+
+    @Override
+    public String toString() {
+
+        return last_Name + "," + first_Name + "," + middle_Name + "," + date_Birth +
+                "," + email + "," + password + "," + blocked + "," + count + "\n";
+    }
 }
