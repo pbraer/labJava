@@ -23,7 +23,7 @@ public class Account {
     private String email;
     private String password;
     private boolean blocked = true;
-    private int count = -1;
+    private int count = 0;
 
     public Account() {}
 
@@ -69,6 +69,8 @@ public class Account {
 
     public void setCount(Integer count) { this.count = count; }
 
-    public void countPlus() { this.count++; }
+    public void count_login() { this.count++; }
+
+    public void good_login(Integer zero) { this.count = zero; }
 
 }

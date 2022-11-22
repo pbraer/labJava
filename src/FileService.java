@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static java.lang.Integer.valueOf;
+
 
 public class FileService {
     private static FileService instance;
@@ -25,10 +27,8 @@ public class FileService {
 
 
     public List<Account> csv_Reader() throws IOException {
-        List<Account> accounts = new ArrayList<Account>();
-        BufferedReader to_read = null;
-        try {
-            to_read = new BufferedReader(new FileReader("data.csv"));
+        List<Account> accounts = new ArrayList<>();
+        try (BufferedReader to_read = new BufferedReader(new FileReader("data.csv"))) {
 
             String line = null;
             Scanner input = null;
@@ -50,7 +50,7 @@ public class FileService {
                     else if (param == 4) { account.setEmail(info); }
                     else if (param == 5) { account.setPassword(info); }
                     else if (param == 6) { account.setBlocked(); }
-                    else if (param == 7) { account.setCount(0); }
+                    else if (param == 7) { account.setCount(valueOf(info)); }
                     else { System.out.println("Данные некорректны!"); }
                     param++;
                 }
@@ -58,15 +58,8 @@ public class FileService {
                 accounts.add(account);
                 param = 0;
             }
-        }catch (IOException e){
+        } catch (IOException e){
             e.printStackTrace();
-
-        }finally {
-
-            if (to_read != null){
-                to_read.close();
-            }
-
         }
 
 

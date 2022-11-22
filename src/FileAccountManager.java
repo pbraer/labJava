@@ -33,8 +33,9 @@ public class FileAccountManager implements AccountManager {
         if (to_Change == -1) {
             accounts.add(account);
             file.csvWriter(accounts);
+            System.out.println("Аккаунт с заданным email " + account.getEmail() + " зарегистрирован!");
         } else {
-            throw new AccountAlreadyExistsException("Аккаунт с заданным email уже зарегистрирован!");
+            throw new AccountAlreadyExistsException("Аккаунт с заданным email " + account.getEmail() + " уже зарегистрирован!");
         }
 
     }
@@ -65,29 +66,43 @@ public class FileAccountManager implements AccountManager {
             }
         }
 
+
         if (step == -1) { // если аккаунта с данным email нет
+
             throw new WrongCredentialsException("Неверно введен email или пароль!");
 
         } else { // если есть аккаунт с данным email
+
             if (Objects.equals(accounts.get(step).getPassword(), password) && !accounts.get(step).getBlocked() &&
-                    accounts.get(step).getCount() < 5) { // если верно введен пароль и данный аккаунт не заблокирован
+                    accounts.get(step).getCount() < 4) { // если верно введен пароль и данный аккаунт не заблокирован
+                counter.right_login(accounts.get(step));
                 System.out.println("Вход выполнен!");
+                file.csvWriter(accounts);
                 return accounts.get(step);
 
-            } else if (Objects.equals(accounts.get(step).getPassword(), password) && accounts.get(step).getCount() >= 5) { // если верно введен пароль,но данный аккаунт не заблокирован
-                throw new AccountBlockedException("Ваш аккаунт заблокирован!");
+            } else if (accounts.get(step).getCount() >= 4 && Objects.equals(accounts.get(step).getPassword(), password)) { // если верно введен пароль,но данный аккаунт не заблокирован
+                accounts.get(step).setBlocked();
+                counter.right_login(accounts.get(step));
+                file.csvWriter(accounts);
+                System.out.println("Ваш аккаунт разблокирован! Вход выполнен!");
+                return accounts.get(step);
 
             } else if (!Objects.equals(accounts.get(step).getPassword(), password)) { // неправильный пароль
                 counter.wrong_login(accounts.get(step));
 
-                if (accounts.get(step).getCount() >= 5) {
+                if (accounts.get(step).getCount() > 4) {
                     accounts.get(step).setBlocked();
+                    file.csvWriter(accounts);
+                    throw new AccountBlockedException("Ваш аккаунт заблокирован!");
+
+                }else{
+                    file.csvWriter(accounts);
+                    throw new WrongCredentialsException("Неверно введен пароль!");
                 }
 
-                file.csvWriter(accounts);
-                throw new WrongCredentialsException("Неверно введен email или пароль!");
             }
         }
+
 
         return accounts.get(step);
     }

@@ -29,11 +29,7 @@ public class FailedLoginCounter {
         return instance;
     }
 
-    public void registration(Account account) {}
+    public void wrong_login(Account account) { account.count_login(); }
 
-    public static void delete(Account account) {}
-
-    public void wrong_login(Account account) {
-        account.countPlus();
-    }
+    public void right_login(Account account) { account.good_login(0); }
 }
